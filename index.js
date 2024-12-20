@@ -136,12 +136,13 @@ const port = 3000;
 app.get('/locations/:place', (req, res) => {
   const place = req.params.place;
   const city = place.split(' ').length > 1 ?  place.split(' ')[1] : place;
-  const filePath = path.join(__dirname, 'data', `${city}.xml`);
+  let filePath = path.join(__dirname, 'data', `${city}.xml`);
 
   if (fs.existsSync(filePath)) {
     res.sendFile(filePath);
   } else {
-    res.status(404).send('File not found');
+    filePath = path.join(__dirname, 'data', `mikkeli.xml`);
+    res.sendFile(filePath);
   }
 });
 
